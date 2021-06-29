@@ -103,6 +103,27 @@
 
   <main id="main">
       <!-- ========================================================================================================================= -->
+      <section id="about_proj" class="services">
+        <div class="container">
+
+          <div class="section-title">
+            <h2>About Project</h2>
+            <!-- <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p> -->
+          </div>
+
+          <div class="section-title">
+            <p>With the development of technology, people's need for applications that will make their daily lives easier.
+            <p>Due to the growing number of tourists, and the increase in the population in Porto, the number of public transport users has also increased.
+            <p>A large number of Porto residents use city buses for transportation.
+            At the moment, there is no possibility to follow the current location of the bus, nor to view its route within an application.
+            <p>Therefore, we decided to create applications that will facilitate the use of city buses in Porto, so that users can make smarter use of the time they may have to spend at bus stops.
+              In addition to viewing the current location and route of the bus, the user will be able to set an alarm that will sound when the bus is at a certain distance from the current location.</p>
+
+          </div>
+
+        </div>
+      </section><!-- End Services Section -->
+
       <!-- ======= About Us Section ======= -->
     <section id="about" class="pricing">
       <div class="container">
@@ -217,6 +238,55 @@
 
       </div>
     </section><!-- End Cta Section -->
+
+    <!-- ========================================================================================================================= -->
+    <!-- ======= Cenarios Section ======= -->
+
+    <section id="cenarios" class="features">
+      <div class="container">
+        <div class="section-title">
+          <h2>Cenarios</h2>
+          <!-- <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p> -->
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 order-2 order-lg-1">
+            <div class="icon-box mt-5 mt-lg-0">
+              <p>Before we started developing the system, we set three basic scenarios that will be solved with the help of our system:</p>
+              <br>
+            <div class="icon-box mt-5 mt-lg-0">
+              <i class="bx bx-search"></i>
+              <h4>Finding route of bus</h4>
+              <p>
+                In this scenario, the user will select the bus for which he wants to check the route.
+                The system will display the route using google maps, with each station marked with a marker
+              </p>
+            </div>
+            <div class="icon-box mt-5 mt-lg-0">
+              <i class="bx bx-bus"></i>
+              <h4>Tracking bus</h4>
+              <p>
+                In this scenario, the user will select the bus for which he wants to check the current location.
+                The system will display the map using google maps, where the current location of the bus will be marked with an icon,
+                and in addition, the entire bus route will be visible.
+              </p>
+            </div>
+            <div class="icon-box mt-5 mt-lg-0">
+              <i class="bx bx-bell"></i>
+              <h4>Setting alarm</h4>
+              <p>
+                This scenario involves using multiple microservices to ultimately get an alarm. Namely,
+                the user selects the bus for which he wants to receive a notification when he is at a certain distance from his current location.
+                When the bus reaches the set distance from the current location, the user will receive a popup that will inform him about it.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Clients Section -->
+
+
+
 
     <!-- ========================================================================================================================= -->
     <!-- ======= Vision Section ======= -->
@@ -341,12 +411,12 @@
           </div>
 
           <div class="col-lg-3 col-6 text-center">
-            <span data-purecounter-start="0" data-purecounter-end="0" data-purecounter-duration="1" class="purecounter"></span>
+            <span data-purecounter-start="0" data-purecounter-end="1" data-purecounter-duration="1" class="purecounter"></span>
             <p>Projects</p>
           </div>
 
           <div class="col-lg-3 col-6 text-center">
-            <span data-purecounter-start="0" data-purecounter-end="5" data-purecounter-duration="1" class="purecounter"></span>
+            <span data-purecounter-start="0" data-purecounter-end="160" data-purecounter-duration="1" class="purecounter"></span>
             <p>Hours on project</p>
           </div>
 
@@ -366,8 +436,8 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Portfolio</h2>
-          <p>In the future, images of the webapp will be made available</p>
+          <h2>Runtime</h2>
+          <p>Updating...</p>
         </div>
 
         <!--<div class="row">
@@ -492,6 +562,36 @@
           <img src="static/img/diagram_v2.png" class="rounded" alt="...">
         </div>
 
+
+        <div class="icon-box mt-5 mt-lg-0">
+          <br>
+          <p>Rest API simulator (data simulator) is a python script that reads data collected from sensors stored into a csv file.
+            Every row of a csv file is readed every 1.5 second and sended to Kafka topic ESP13_bus_data.</p>
+          <p>Realtime service is Spring boot application that is credited with communicating with the frontend.
+            Realtime service contains Kafka consumer who receives messages on topic ESP13_bus_data,
+            and if bus id of the obtained data is equal to id of desired busses getted from fronted,
+            service sends new obtained latitude and longitude.
+            Other purpose of Realtime service is that he is sending alarm to frontend getted in Kafka consumer on topic ESP13_distance_alarm.
+            Connection between frontend and realtime time service is obtained by using Server Sent Event.
+          </p>
+          <p>Distance service is Spring boot application which serves to set an alarm for a particular bus.
+            Kafka consumer made within the service get messages on topic ESP13_bus_data. After receiving the data,
+            if it is data whose bus id matches the id for which the alarm is set,
+            the distance between the obtained location and the current location of the user is calculated.
+            If the location is less than 1000 meters, a message is sent using Kafka producer on the topic ESP13_distance_alarm.</p>
+          <p>Database service is Spring boot is an application whose purpose is to consume Kafka messages with the topic ESP13_bus_data
+            and save data within the database. In addition, this application contains routes from which it is possible to get all bus ids,
+            their routes and history data. Database is mysql database that contains historical data about positions of all busses and their speed.
+            The database is filled after each sent Kafka message that has the topic ESP13_bus_data.
+          </p>
+          <p>Frontend is React application whose purpose is to present information about busses.
+            First screen contains table with all busses ids. For each bus it is possible to define alarm,
+            track his current position or see bus route. When user wants to track some bus current position or just see his route,
+            application will open modal that will contain google map, on which with the help of react-google-map package and it functions
+            will be presented routes, stop points and current location of bus.
+          </p>
+        </div>
+
     <!---    <div class="row">
 
           <div class="col-lg-4 col-md-6">
@@ -559,71 +659,11 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Contact</h2>
+          <h2>Deployment</h2>
           <!--<p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>-->
         </div>
       </div>
 
-      <div class="container">
-
-        <div class="row mt-5">
-
-          <div class="col-lg-4">
-            <div class="info">
-              <div class="address">
-                <i class="ri-map-pin-line"></i>
-                <h4>Location:</h4>
-                <p>Universidade de Aveiro, 3810-193 Aveiro</p>
-              </div>
-
-              <div class="email">
-                <i class="ri-mail-line"></i>
-                <h4>Email:</h4>
-                <p>info@example.com</p>
-              </div>
-
-              <div class="phone">
-                <i class="ri-phone-line"></i>
-                <h4>Call:</h4>
-                <p>+1 5589 55488 55s</p>
-              </div>
-
-            </div>
-
-          </div>
-
-          <div class="col-lg-8 mt-5 mt-lg-0">
-
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-                </div>
-                <div class="col-md-6 form-group mt-3 mt-md-0">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-                </div>
-              </div>
-              <div class="form-group mt-3">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
-              </div>
-              <div class="form-group mt-3">
-                <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
-              </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>
-
-          </div>
-
-
-
-        </div>
-
-      </div>
     </section><!-- End Contact Section -->
 
     <section id="timesheet" class="pricing">
