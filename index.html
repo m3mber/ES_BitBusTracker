@@ -163,14 +163,14 @@
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-3 d-flex align-items-stretch">
+          <div class="col-lg-3 col-md-4 d-flex align-items-stretch">
             <div class="text-center icon-box">
 
               <h4><a href="">José Brás</a></h4>
               <div class="text-center img-fluid">
-                <img src="https://portalregionalsocioeconomico.pt/wp-content/plugins/advanced-classifieds-and-directory-pro/public/images/no-image.png" class="rounded" alt="...">
+                <img src="static/img/bras.jpeg" class="rounded" alt="...">
               </div>
-              <p><a href="">email@ua.pt</a></p>
+              <p><a href="">jcpbras@ua.pt</a></p>
             </div>
           </div>
         </div>
@@ -473,11 +473,35 @@
           <p>Defines the trigger point for the test scenario execution.</p>
           <br>
           <p> <b>@Then −</b> </p>
-          <p>Expected result<br>
+          <p>Expected result</p>
+          <br>
           Knowing this, we start doing our tests. For the database we use the tests to see if we were getting the expected data, for example, to see if we got proper values and not empty ones, to see if the services were being started and to see if a value was saved into the database after being inserted.
-            To use the database, we opted to use Mysql, as it was required to use an in-memory database. For this we added the dependency “mysql-connector-java.</p>
+            To use the database, we opted to use Mysql, as it was required to use an in-memory database. For this we added the dependency “mysql-connector-java. Although the tests are not as critical as in a full blown project, it is very important to take advantage of them to see early mistakes, as well
+            for future project scalability.
+          </p>
         </div>
       </div>
+
+     <!-- Monitoring -->
+     <section id="deployment" class="contact">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Monitoring</h2>
+          <br>
+
+          <p>For monitoring, we tried using ELK. "ELK" summerized is a set of tool that can help us monitor our services, as well as display their data. Although we were not able to implement this feature, we still made some configurations for it.
+          <p><b>logstash.yml</b>: Here we defined the logstash host and the path for the configuration </p>
+          <p><b>logstash.conf</b>: Here we defined the Elastic Search and defined the port to be used for logs</p>
+          <p><b>Dockerfile</b>: Here is were we would build the docker image  </p>
+          <p><b>Docker-compos_elk.yml</b>: Here is were we would define the path to build the docker image, define the container name and define ports to be used  </p>
+          
+
+          </p>
+          <br>
+        </div>
+      </div>
+    </section>
 
     </section><!-- End Contact Section -->
 
@@ -494,7 +518,12 @@
       </div>
     </section><!-- End Contact Section -->
 
+   
+
+
+
   </main><!-- End #main -->
+
 
   <!-- ========================================================================================================================= -->
   <!-- ======= Footer ======= -->
